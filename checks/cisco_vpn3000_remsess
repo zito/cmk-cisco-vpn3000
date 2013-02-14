@@ -1,0 +1,69 @@
+#!/usr/bin/python
+# -*- encoding: utf-8; py-indent-offset: 4 -*-
+#
+###############################################################################
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+
+
+# The check has been developed using
+#   Cisco Systems, Inc./VPN 3000 Concentrator Version 4.7.2.P
+#
+# +------------------------------------------------------------------+
+# | This file has been contributed by:                               |
+# |                                                                  |
+# | Václav Ovsík <vaclav.ovsik@gmail.com>             Copyright 2013 |
+# +------------------------------------------------------------------+
+
+# Example info:
+#  [['20']]
+#
+
+
+# Default remote active session levels (count)
+cisco_vpn3000_remsess_default_levels = (150, 200)
+
+def inventory_cisco_vpn3000_remsess(info):
+    if len(info[0]) != 1:
+        return
+    return [ (None, 'cisco_vpn3000_remsess_default_levels') ]
+
+def check_cisco_vpn3000_remsess(item, params, info):
+    remsess = saveint(info[0][0])
+    status = 0
+    txt = 'Active remote sessions: %d' % remsess
+    if params:
+        (warn, crit) = params
+    else:
+        warn = crit = None
+    if crit and remsess >= crit:
+        txt += ' (!!) >=%d' % crit
+        status = max(status, 2)
+    elif warn and remsess >= warn:
+        txt += ' (!) >=%d' % warn
+        status = max(status, 1)
+    return (status,
+            {0:'OK', 1:'WARN', 2:'CRIT'}[status] + ' - ' + txt,
+            (('sessions', remsess, warn, crit),))
+
+
+check_info['cisco_vpn3000_remsess'] = (check_cisco_vpn3000_remsess, "Sessions",
+        1, inventory_cisco_vpn3000_remsess)
+
+snmp_info['cisco_vpn3000_remsess'] = ( '.1.3.6.1.4.1.3076.2.1.2.17.1', [
+        '9',    # ALTIGA-SESSION-STATS-MIB::alActiveRemoteAccessSessionCount
+    ])
+
+snmp_scan_functions['cisco_vpn3000_remsess'] = \
+        lambda oid: oid('.1.3.6.1.2.1.1.2.0').startswith('.1.3.6.1.4.1.3076')

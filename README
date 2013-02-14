@@ -1,0 +1,28 @@
+
+   ____ _                __     ______  _   _   _____  ___   ___   ___  
+  / ___(_)___  ___ ___   \ \   / /  _ \| \ | | |___ / / _ \ / _ \ / _ \ 
+ | |   | / __|/ __/ _ \   \ \ / /| |_) |  \| |   |_ \| | | | | | | | | |
+ | |___| \__ \ (_| (_) |   \ V / |  __/| |\  |  ___) | |_| | |_| | |_| |
+  \____|_|___/\___\___/     \_/  |_|   |_| \_| |____/ \___/ \___/ \___/ 
+
+   Check-MK plugin for monitoring Cisco Systems, Inc. VPN 3000
+   Concentrator device using SNMP.
+
+   Copyright (C) 2013  Václav Ovsík <vaclav.ovsik@gmail.com>
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+---------------------------------------------------------------------------
+
+   For Check_MK see http://mathias-kettner.de/check_mk.html
